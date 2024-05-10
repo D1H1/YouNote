@@ -1,0 +1,5 @@
+{
+    "openai_api_key": "APIKEY",
+    "GOOGLE_CREDENTIALS_PATH": "resourses/CREDENTIALS.json",
+    "mongo_uri": "MONGODBURL"
+}

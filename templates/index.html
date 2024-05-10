@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes and Questions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 80%;
+            min-height: 100vh;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .notes, .add-note, .questions {
+            width: 30%;
+            margin-right: 20px;
+        }
+        .note {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #fff;
+        }
+        .note img {
+            max-width: 100%;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+        .note-count-container {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .note-count-label {
+            margin-right: 10px;
+        }
+        .note-count-input {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            width: 60px;
+        }
+        .add-note textarea, .add-note input[type="file"], .add-note button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+        }
+        .question-form {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .question-form input[type="text"], .question-form button {
+            flex: 1;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            margin-left: 10px;
+        }
+        .add-note button, .question-form button {
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .chatgpt-response {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #e8f5e9;
+            color: #1b5e20;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="notes" id="notes">
+            <h2>Notes</h2>
+            <div class="note-count-container">
+                <label for="noteCount" class="note-count-label">Show first:</label>
+                <input type="number" id="noteCount" name="noteCount" min="1" value="5" class="note-count-input" onchange="updateNotes()">
+            </div>
+        </div>
+        <div class="add-note">
+            <h2>Add Note</h2>
+            <form action="/add_note" method="post" enctype="multipart/form-data">
+                <textarea name="note_text" placeholder="Enter your note" required></textarea>
+                <input type="file" name="image" accept="image/*">
+                <button type="submit">Add</button>
+            </form>
+        </div>
+        <div class="questions">
+            <h2>Questions</h2>
+            <form action="/submit_question" method="post" class="question-form">
+                <input type="text" name="question" placeholder="Enter your question" required>
+                <button type="submit">Submit</button>
+            </form>
+            {% if response %}
+            <div class="chatgpt-response">
+                <h3>ChatGPT Response</h3>
+                <p>{{ response }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <script>
+    function updateNotes() {
+        var noteCount = document.getElementById("noteCount").value;
+        fetch("/update_notes?noteCount=" + noteCount)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("notes").innerHTML = data.html;
+            });
+    }
+    </script>
+</body>
+</html>
