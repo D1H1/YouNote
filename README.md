@@ -23,26 +23,29 @@ Before you begin, ensure you have the following installed:
 
 Clone the repository:
 
-`git clone https://github.com/username/YouNote.git
-cd YouNote`
+```git clone https://github.com/username/YouNote.git```
+```cd YouNote```
 
 Setting Up a Virtual Environment
 (Optional) Set up a Python virtual environment to manage dependencies:
 
-`python -m venv venv`
-`source venv/bin/activate`  # On Windows use `venv\Scripts\activate`
+```python -m venv venv```
+```source venv/bin/activate``` 
+
+On Windows use 
+```venv\Scripts\activate```
 
 Install Dependencies
 Install the required Python packages:
 
-`pip install -r requirements.txt`
+```pip install -r requirements.txt```
 
 Deploying with Docker
 To deploy the application using Docker, follow these steps:
 
-`docker build -t younote .`
+```docker build -t younote .```
 
-`docker run -p 5000:5000 younote`
+```docker run -p 5000:5000 younote```
 
 Usage
 After deployment, navigate to `http://localhost:5000` in your web browser to access the YouNote application. You can add notes, view them, and submit questions through the user interface.
