@@ -71,13 +71,11 @@ def submit_question():
     return render_template('index.html', notes=matched_notes, question=question, response=response)
 
 
-
 @app.route('/')
 def index():
     notes = list(notes_collection.find().sort("createdAt", -1).limit(5))
     return render_template('index.html', notes=notes)
 
-import json  # Ensure JSON is imported if you need to parse strings to dictionaries
 
 @app.route('/add_note', methods=['POST'])
 def add_note():
